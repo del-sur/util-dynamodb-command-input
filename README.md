@@ -1,6 +1,11 @@
 # Utility functions for @aws-sdk/client-dynamodb commands
 Create and map input for certain [`@aws-sdk/client-dynamodb`](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-dynamodb/index.html). Aliases are also set, if applicable (i.e. if a provided field is a [reserved word](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html)).
 
+## Installation
+```bash
+npm install util-dynamodb-command-input
+```
+
 ## Functions
 ```ts
 toProjectionInput(dynamoDbFields: string[]) => {

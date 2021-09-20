@@ -1,7 +1,7 @@
 {
   "name": "util-dynamodb-command-input",
   "version": "1.0.0",
-  "description": "Utils for translating a flat JavaScript Object to DynamoDB Command Input values. ",
+  "description": "Utils for generating DynamoDB command input values.",
   "main": "index.js",
   "keywords": [
     "dynamodb",
