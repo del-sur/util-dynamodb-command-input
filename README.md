@@ -66,4 +66,14 @@ const input = {
 
 const updateResponse = await dynamoDBClient.send(new UpdateItemCommand(input))
 ```
-Note that toCommandInput does a deep merge provided common props and function results.
+Note that toCommandInput does a deep merge on common props and function results.
+
+## Development
+Build with esbuild:
+```bash
+npm run build
+```
+Run tests with jest:
+```bash
+npm run test
+```
