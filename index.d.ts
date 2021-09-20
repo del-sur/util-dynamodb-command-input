@@ -1,0 +1,3 @@
+export const toProjectionInput: ToProjectionInputFn
+export const toUpdateItemInputSET: ToProjectionInputFn
+export const toCommandInput: ToCommandInputFn
