@@ -1,5 +1,6 @@
 import type { AttributeValue } from '@aws-sdk/client-dynamodb'
 import { marshall } from '@aws-sdk/util-dynamodb'
+
 import reservedWords from './reservedWords'
 
 export default (input: DynamoDBUpdateSET): UpdateInputSET => {
