@@ -37,7 +37,7 @@ export default (input: DynamoDBUpdateSET): UpdateInputSET => {
   const result = {
     UpdateExpression: `SET ${expressionArr.join(', ')}`,
     ExpressionAttributeValues,
-    ...(Object.keys(ExpressionAttributeNames).length && {
+    ...(!!Object.keys(ExpressionAttributeNames).length && {
       ExpressionAttributeNames,
     }),
   }

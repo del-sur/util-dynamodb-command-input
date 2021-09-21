@@ -1,5 +1,3 @@
-import { isEmpty } from 'ramda'
-
 import reservedWords from './reservedWords'
 
 export default (dynamoDbFields: AttributesToGet): ProjectionExpressionCommandInput => {
@@ -15,6 +13,6 @@ export default (dynamoDbFields: AttributesToGet): ProjectionExpressionCommandInp
   }
   return {
     ProjectionExpression: dynamoDbFields.map(transformKey).join(','),
-    ...(!isEmpty(ExpressionAttributeNames) && { ExpressionAttributeNames }),
+    ...(!!Object.keys(ExpressionAttributeNames).length && { ExpressionAttributeNames }),
   }
 }
