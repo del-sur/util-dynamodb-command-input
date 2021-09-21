@@ -1,5 +1,7 @@
 # Utility functions for @aws-sdk/client-dynamodb commands
-Create and map input for certain [`@aws-sdk/client-dynamodb`](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-dynamodb/index.html). Aliases are also set, if applicable (i.e. if a provided field is a [reserved word](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html)).
+A common DynamoDB error stems from field names being [reserved words](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html). One may run into this when specifying a `ProjectionExpression` for getting/scanning/querying items, or `UpdateExpression` and `ExpressionAttributeValues` for updating items. These utility functions detect those reserved words, generate aliases, and format command input accordingly.
+
+You input once and become more declarative. Formatting, mapping, and aliasing are handled by these utilities for your convenience.
 
 ## Installation
 ```bash
@@ -27,16 +29,7 @@ toUpdateItemInputSET(updates: { [dynamoDbField: string]: any }) => {
 Translate a JavaScript Object of field upadates to the following `UpdateItemCommandInput` properties: 
 - `UpdateExpression`: Update values are mapped to this comma separated string ([more about update expressions](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html)).
 - `ExpressionAttributeValues`: Marshalled update values. Uses `marshall` from `@aws-sdk/util-dynamodb` under the hood.
-- `ExpressionAttributeNames`: Aliases for reserved words, if any
-`AttributeValue` is imported from `@aws-sdk/client-dynamodb`
-
-## Peer devDependencies
-```bash
-@aws-sdk/client-dynamodb
-@aws-sdk/util-dynamodb
-```
-
-Assumes that most projects using this already have the above dependencies. Kindly `npm install --save` them, if not.
+- `ExpressionAttributeNames`: Aliases for reserved words, if any. `AttributeValue` is imported from `@aws-sdk/client-dynamodb`
 
 ## Usage
 ```ts
@@ -62,3 +55,15 @@ Run tests with jest:
 ```bash
 npm run test
 ```
+
+## Peer dependencies
+```bash
+@aws-sdk/client-dynamodb
+@aws-sdk/util-dynamodb
+```
+
+It is assumed that most projects using this already have the above dependencies. Kindly `npm install --save` them, if not.
+
+## TODOs
+- Utilities for `REMOVE`, `ADD`, `DELETE`.
+- Utilities for other command inputs that need formatting and alias mapping.
