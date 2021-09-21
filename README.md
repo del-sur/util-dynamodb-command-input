@@ -39,7 +39,6 @@ Translate a JavaScript Object of field upadates to the following `UpdateItemComm
 Assumes that most projects using this already have the above dependencies. Kindly `npm install --save` them, if not.
 
 ## Usage
-Can be used individually:
 ```ts
 import { toProjectionInput, toUpdateItemInputSET } from 'util-dynamodb-command-input'
 
@@ -53,25 +52,6 @@ const updateResponse = await dynamoDBClient.send(new UpdateItemCommand({
   ...toUpdateItemInputSET({ foo: 'baz' }),
 }))
 ```
-
-To chain functions on common command inputs:
-```ts
-import { toCommandInput } from 'util-dynamodb-command-input'
-
-// Common input props will not be overriden
-const { toProjectionInput, toUpdateItemInputSET } = toCommandInput({
-  TableName: 'FooBarBaz',
-  ...otherCommonProps,
-})
-
-const input = {
-  ...toProjectionInput(['foo']),
-  ...toUpdateItemInputSET({ foo: 'baz' }),
-}
-
-const updateResponse = await dynamoDBClient.send(new UpdateItemCommand(input))
-```
-Note that toCommandInput does a deep merge on common props and function results.
 
 ## Development
 Build with esbuild:
