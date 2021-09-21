@@ -1,7 +1,5 @@
 # Utility functions for @aws-sdk/client-dynamodb commands
-A common DynamoDB error stems from field names being [reserved words](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html). One may run into this when specifying a `ProjectionExpression` for getting/scanning/querying items, or `UpdateExpression` and `ExpressionAttributeValues` for updating items. These utility functions detect those reserved words, generate aliases, and format command input accordingly.
-
-You input once and become more declarative. Formatting, mapping, and aliasing are handled by these utilities for your convenience.
+A common DynamoDB error stems from field names being [reserved words](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html). One may run into this when specifying a `ProjectionExpression` for getting/scanning/querying items, or `UpdateExpression` and `ExpressionAttributeValues` for updating items. These utility functions detect those reserved words, generate aliases, and format command input accordingly. Formatting, mapping, and aliasing are handled by these utilities for your convenience.
 
 ## Installation
 ```bash
