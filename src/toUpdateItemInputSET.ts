@@ -7,25 +7,49 @@ export default (input: DynamoDBUpdateSET): UpdateInputSET => {
   const { expressionArr, ExpressionAttributeValues, ExpressionAttributeNames } =
     Object.keys(input).reduce(
       (acc, key) => {
-        let expression: string[] = [key, `:${key}`]
+        let expression: Array<[string, string]> = [[key, `:${key}`]]
         let ExpressionAttributeNames = acc.ExpressionAttributeNames
+        let ExpressionAttributeValues = acc.ExpressionAttributeValues
 
         if (reservedWords.includes(key.toUpperCase())) {
           const attributeAlias = `#${key}`
-          expression[0] = attributeAlias
+          expression[0][0] = attributeAlias
           ExpressionAttributeNames = {
             ...ExpressionAttributeNames,
             [attributeAlias]: key,
           }
         }
 
+        if (typeof input[key] === 'object' && input[key] !== null) {
+          const parent = expression[0][0]
+          const nestedKeys = Object.keys(input[key])
+
+          expression = []
+
+          nestedKeys.forEach(nestedKey => {
+            const valueKey = `:${parent.replace('#', '')}${nestedKey}`
+            expression = [
+              ...expression,
+              [`${parent}.${nestedKey}`, valueKey],
+            ]
+            ExpressionAttributeValues = {
+              ...ExpressionAttributeValues,
+              ...marshall({ [valueKey]: input[key][nestedKey] }),
+            }
+          })
+        } else {
+          ExpressionAttributeValues = {
+            ...ExpressionAttributeValues,
+            ...marshall({ [`:${key}`]: input[key] }),
+          }
+        }
+
         return {
           ...acc,
-          expressionArr: acc.expressionArr.concat(expression.join(' = ')),
-          ExpressionAttributeValues: {
-            ...acc.ExpressionAttributeValues,
-            ...marshall({ [`:${key}`]: input[key] }),
-          },
+          expressionArr: acc.expressionArr.concat(
+            expression.map(i => i.join(' = '))
+          ),
+          ExpressionAttributeValues,
           ExpressionAttributeNames,
         }
       },
